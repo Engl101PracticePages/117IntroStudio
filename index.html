@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Who Are You? Introduction Studio</title>
+  <title>Who Are You? Video Introduction Studio</title>
   <style>
     :root {
       --paper: #f8f2e8;
@@ -20,16 +20,10 @@
       --soft-shadow: 0 10px 28px rgba(31, 41, 51, 0.09);
       --radius: 24px;
       --radius-small: 16px;
-      --focus: #1f6feb;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -43,16 +37,12 @@
       line-height: 1.6;
     }
 
-    a {
-      color: var(--clay-dark);
-      font-weight: 700;
-    }
+    a { color: var(--clay-dark); font-weight: 700; }
 
     a:focus,
     button:focus,
     input:focus,
-    textarea:focus,
-    select:focus {
+    textarea:focus {
       outline: 4px solid rgba(31, 111, 235, 0.3);
       outline-offset: 3px;
     }
@@ -67,19 +57,14 @@
       border-radius: 999px;
       z-index: 50;
     }
-
-    .skip-link:focus {
-      left: 1rem;
-    }
+    .skip-link:focus { left: 1rem; }
 
     .page-shell {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
 
-    header.hero {
-      padding: 4.5rem 0 2.2rem;
-    }
+    header.hero { padding: 4.5rem 0 2.2rem; }
 
     .hero-card {
       background: linear-gradient(135deg, rgba(255, 250, 241, 0.98), rgba(248, 242, 232, 0.92));
@@ -104,8 +89,6 @@
 
     .eyebrow {
       display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
       color: var(--clay-dark);
       background: rgba(183, 101, 75, 0.12);
       border: 1px solid rgba(183, 101, 75, 0.24);
@@ -134,7 +117,7 @@
 
     .hero-text {
       font-size: clamp(1.1rem, 2vw, 1.38rem);
-      max-width: 760px;
+      max-width: 780px;
       color: var(--muted);
       margin: 1.25rem 0 0;
       position: relative;
@@ -168,9 +151,7 @@
     }
 
     .button:hover,
-    button:hover {
-      transform: translateY(-2px);
-    }
+    button:hover { transform: translateY(-2px); }
 
     .button.primary,
     button.primary {
@@ -213,10 +194,7 @@
       padding: 1rem;
     }
 
-    nav.side-nav h2 {
-      font-size: 1.25rem;
-      margin-bottom: 0.6rem;
-    }
+    nav.side-nav h2 { font-size: 1.25rem; margin-bottom: 0.6rem; }
 
     nav.side-nav a {
       display: block;
@@ -228,14 +206,9 @@
       font-size: 0.96rem;
     }
 
-    nav.side-nav a:hover {
-      background: rgba(125, 146, 124, 0.15);
-    }
+    nav.side-nav a:hover { background: rgba(125, 146, 124, 0.15); }
 
-    main {
-      display: grid;
-      gap: 1.25rem;
-    }
+    main { display: grid; gap: 1.25rem; }
 
     section.card {
       background: rgba(255, 250, 241, 0.94);
@@ -263,220 +236,195 @@
 
     section.card > p {
       color: var(--muted);
-      max-width: 800px;
+      max-width: 820px;
       margin-top: 0;
     }
 
-    .format-grid,
-    .check-grid,
-    .tool-grid {
+    .timeline {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 1.2rem;
+      gap: 0.85rem;
+      margin-top: 1rem;
     }
 
-    .format-card,
-    .mini-card {
+    .time-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+    }
+
+    .time-row strong { color: var(--clay-dark); }
+
+    .script-builder {
       background: #fffdfa;
       border: 1px solid rgba(31, 41, 51, 0.12);
       border-radius: var(--radius-small);
       padding: 1rem;
-    }
-
-    .format-card h3,
-    .mini-card h3 {
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.4rem;
-    }
-
-    .format-card p,
-    .mini-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .social-options {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .option-card {
-      min-height: 260px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .option-card::after {
-      content: "";
-      position: absolute;
-      right: -4rem;
-      top: -4rem;
-      width: 9rem;
-      height: 9rem;
-      border-radius: 999px;
-      background: rgba(125, 146, 124, 0.13);
-    }
-
-    .featured-option::after {
-      background: rgba(183, 101, 75, 0.14);
-    }
-
-    .option-topline {
-      color: var(--clay-dark);
-      font-size: 0.78rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.45rem;
-    }
-
-    .social-post-card {
-      max-width: 680px;
-      margin: 1.2rem auto 0;
-      background: #fffdfa;
-      border: 1px solid rgba(31, 41, 51, 0.14);
-      border-radius: 28px;
-      box-shadow: 0 18px 45px rgba(31, 41, 51, 0.12);
-      overflow: hidden;
-    }
-
-    .post-header {
-      display: flex;
-      gap: 0.85rem;
-      align-items: center;
-      padding: 1rem 1.1rem;
-      border-bottom: 1px solid rgba(31, 41, 51, 0.1);
-    }
-
-    .avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--clay), var(--plum));
-      color: white;
-      font-weight: 900;
-      font-size: 1.3rem;
-    }
-
-    .post-header h3 {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 1.05rem;
-      margin: 0;
-      letter-spacing: 0;
-    }
-
-    .post-header p {
-      margin: 0.1rem 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .media-placeholder {
-      min-height: 320px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 2rem;
-      color: white;
-      background:
-        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.18), transparent 10rem),
-        linear-gradient(135deg, var(--plum), #6f423f 52%, var(--sage));
-    }
-
-    .media-placeholder strong {
-      display: block;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.7rem, 4vw, 2.7rem);
-      line-height: 1.05;
-      margin-bottom: 0.65rem;
-    }
-
-    .media-placeholder span {
-      display: block;
-      max-width: 360px;
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    .post-caption {
-      padding: 1rem 1.1rem;
-      border-bottom: 1px solid rgba(31, 41, 51, 0.1);
-    }
-
-    .post-actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      text-align: center;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 0.92rem;
-    }
-
-    .post-actions span {
-      padding: 0.85rem;
-      border-right: 1px solid rgba(31, 41, 51, 0.1);
-    }
-
-    .post-actions span:last-child {
-      border-right: 0;
-    }
-
-    .slide-grid {
-      grid-template-columns: repeat(5, minmax(140px, 1fr));
-      overflow-x: auto;
-      padding-bottom: 0.25rem;
-    }
-
-    .slide-card {
-      min-height: 180px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, #fffdfa 0%, #f8f2e8 100%);
-    }
-
-    .slide-card span {
-      display: inline-block;
-      color: var(--clay-dark);
-      font-size: 0.8rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.45rem;
-    }
-
-    .path-panel {
-      display: none;
-      margin-top: 1.25rem;
-    }
-
-    .path-panel.active {
-      display: block;
-    }
-
-    .choice-feedback {
-      display: none;
       margin-top: 1rem;
-      padding: 0.9rem 1rem;
-      border-radius: var(--radius-small);
-      background: rgba(125, 146, 124, 0.16);
-      border: 1px solid rgba(125, 146, 124, 0.28);
-      font-weight: 750;
     }
 
-    .choice-feedback.active {
+    .script-builder h3,
+    .recorder-script h3,
+    .walkthrough h3 {
+      font-size: 1.7rem;
+      margin-bottom: 0.35rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 850;
+      margin: 1rem 0 0.35rem;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid rgba(31, 41, 51, 0.2);
+      border-radius: 16px;
+      padding: 0.85rem 0.95rem;
+      min-height: 48px;
+      background: #fffdfa;
+      color: var(--ink);
+      font: inherit;
+      box-shadow: inset 0 1px 0 rgba(31, 41, 51, 0.04);
+    }
+
+    textarea { min-height: 92px; resize: vertical; }
+
+    .field-help {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 0.1rem 0 0.35rem;
+    }
+
+    .output-box {
+      background: #fffdfa;
+      border: 1px dashed rgba(49, 38, 62, 0.32);
+      border-radius: var(--radius-small);
+      padding: 1rem;
+      margin-top: 1rem;
+      white-space: pre-wrap;
+    }
+
+    .recording-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: 1rem;
+      align-items: start;
+      margin-top: 1rem;
+    }
+
+    .studio-panel {
+      background: linear-gradient(135deg, var(--plum), #45334f);
+      color: white;
+      border-radius: var(--radius);
+      padding: 1.3rem;
+      box-shadow: 0 18px 42px rgba(49, 38, 62, 0.22);
+    }
+
+    .studio-panel h3 { font-size: 1.7rem; margin-bottom: 0.35rem; }
+    .studio-panel p { color: rgba(255, 255, 255, 0.82); margin-top: 0; }
+
+    .recorder-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    video {
+      width: 100%;
+      margin-top: 0.75rem;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.35);
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .download-link { display: none; margin-top: 0.75rem; }
+
+    .recorder-script {
+      background: #fffdfa;
+      border: 1px solid rgba(31, 41, 51, 0.12);
+      border-radius: var(--radius);
+      padding: 1rem;
+      box-shadow: var(--soft-shadow);
+      position: sticky;
+      top: 1rem;
+    }
+
+    .mobile-script-button {
+      display: none;
+      width: 100%;
+      margin-top: 0.75rem;
+    }
+
+    .script-drawer {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 80;
+      background: #fffdfa;
+      border-top: 1px solid rgba(31, 41, 51, 0.16);
+      box-shadow: 0 -16px 45px rgba(31, 41, 51, 0.22);
+      border-radius: 24px 24px 0 0;
+      padding: 1rem;
+      max-height: 58vh;
+      overflow: auto;
+    }
+
+    .script-drawer.active {
       display: block;
     }
 
-    .choice-button[aria-pressed="true"] {
-      background: var(--plum);
-      color: white;
-      border-color: transparent;
+    .script-drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
     }
+
+    .script-drawer-header h3 {
+      font-size: 1.35rem;
+    }
+
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      background: rgba(31, 41, 51, 0.35);
+    }
+
+    .drawer-backdrop.active {
+      display: block;
+    }
+
+    .script-scroll {
+      max-height: 520px;
+      overflow: auto;
+      border-radius: var(--radius-small);
+      border: 1px dashed rgba(49, 38, 62, 0.25);
+      background: #fffaf1;
+      padding: 1rem;
+      white-space: pre-wrap;
+    }
+
+    .alert {
+      border-radius: var(--radius-small);
+      padding: 1rem;
+      background: rgba(197, 154, 74, 0.16);
+      border: 1px solid rgba(197, 154, 74, 0.32);
+      margin-top: 1rem;
+    }
+
+    .alert strong { color: var(--clay-dark); }
 
     .walkthrough {
       margin-top: 1.25rem;
@@ -484,11 +432,6 @@
       border: 1px solid rgba(31, 41, 51, 0.12);
       border-radius: var(--radius-small);
       padding: 1rem;
-    }
-
-    .walkthrough h3 {
-      font-size: 1.7rem;
-      margin-bottom: 0.35rem;
     }
 
     .walkthrough-tabs {
@@ -530,27 +473,11 @@
       background: rgba(255, 255, 255, 0.72);
     }
 
-    .screen-body {
-      padding: 1rem;
-    }
-
-    .walkthrough-panel {
-      display: none;
-    }
-
-    .walkthrough-panel.active {
-      display: block;
-    }
-
-    .walkthrough-panel ol {
-      margin: 0;
-      padding-left: 1.4rem;
-    }
-
-    .walkthrough-panel li {
-      margin: 0.65rem 0;
-      padding-left: 0.2rem;
-    }
+    .screen-body { padding: 1rem; }
+    .walkthrough-panel { display: none; }
+    .walkthrough-panel.active { display: block; }
+    .walkthrough-panel ol { margin: 0; padding-left: 1.4rem; }
+    .walkthrough-panel li { margin: 0.65rem 0; padding-left: 0.2rem; }
 
     .canvas-mini-post {
       margin-top: 1rem;
@@ -566,127 +493,11 @@
       margin-bottom: 0.35rem;
     }
 
-    .script-builder {
-      margin-top: 1.25rem;
-      background: #fffdfa;
-      border: 1px solid rgba(31, 41, 51, 0.12);
-      border-radius: var(--radius-small);
-      padding: 1rem;
-    }
-
-    .script-builder h3 {
-      font-size: 1.7rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .timeline {
+    .check-grid {
       display: grid;
-      gap: 0.85rem;
-      margin-top: 1rem;
-    }
-
-    .time-row {
-      display: grid;
-      grid-template-columns: 130px 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
-      padding: 1rem;
-      background: #fffdfa;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-small);
-    }
-
-    .time-row strong {
-      color: var(--clay-dark);
-    }
-
-    label {
-      display: block;
-      font-weight: 850;
-      margin: 1rem 0 0.35rem;
-    }
-
-    textarea,
-    input[type="text"] {
-      width: 100%;
-      border: 1px solid rgba(31, 41, 51, 0.2);
-      border-radius: 16px;
-      padding: 0.85rem 0.95rem;
-      min-height: 48px;
-      background: #fffdfa;
-      color: var(--ink);
-      font: inherit;
-      box-shadow: inset 0 1px 0 rgba(31, 41, 51, 0.04);
-    }
-
-    textarea {
-      min-height: 92px;
-      resize: vertical;
-    }
-
-    .field-help {
-      color: var(--muted);
-      font-size: 0.94rem;
-      margin: 0.1rem 0 0.35rem;
-    }
-
-    .studio-panel {
-      background: linear-gradient(135deg, var(--plum), #45334f);
-      color: white;
-      border-radius: var(--radius);
-      padding: 1.3rem;
-      margin-top: 1.1rem;
-      box-shadow: 0 18px 42px rgba(49, 38, 62, 0.22);
-    }
-
-    .studio-panel h3 {
-      font-size: 1.7rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .studio-panel p {
-      color: rgba(255, 255, 255, 0.82);
-      margin-top: 0;
-    }
-
-    .recorder-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin: 1rem 0;
-    }
-
-    video,
-    audio {
-      width: 100%;
-      margin-top: 0.75rem;
-      border-radius: 18px;
-      background: rgba(0, 0, 0, 0.35);
-    }
-
-    .download-link {
-      display: none;
-      margin-top: 0.75rem;
-    }
-
-    .alert {
-      border-radius: var(--radius-small);
-      padding: 1rem;
-      background: rgba(197, 154, 74, 0.16);
-      border: 1px solid rgba(197, 154, 74, 0.32);
-      margin-top: 1rem;
-    }
-
-    .alert strong {
-      color: var(--clay-dark);
-    }
-
-    .output-box {
-      background: #fffdfa;
-      border: 1px dashed rgba(49, 38, 62, 0.32);
-      border-radius: var(--radius-small);
-      padding: 1rem;
-      margin-top: 1rem;
-      white-space: pre-wrap;
+      margin-top: 1.2rem;
     }
 
     .check-item {
@@ -706,10 +517,7 @@
       accent-color: var(--clay-dark);
     }
 
-    .check-item label {
-      margin: 0;
-      font-weight: 750;
-    }
+    .check-item label { margin: 0; font-weight: 750; }
 
     .sticky-status {
       position: fixed;
@@ -724,94 +532,54 @@
       box-shadow: 0 12px 28px rgba(31, 41, 51, 0.25);
     }
 
-    .print-only {
-      display: none;
-    }
+    .print-only { display: none; }
+    footer { padding: 2rem 0 4rem; color: var(--muted); text-align: center; }
 
-    footer {
-      padding: 2rem 0 4rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    @media (max-width: 850px) {
-      .layout {
+    @media (max-width: 900px) {
+      .layout,
+      .recording-layout {
         grid-template-columns: 1fr;
       }
 
-      nav.side-nav {
+      nav.side-nav,
+      .recorder-script {
         position: static;
       }
 
-      .format-grid,
-      .check-grid,
-      .tool-grid,
-      .social-options {
-        grid-template-columns: 1fr;
+      .recorder-script {
+        display: none;
       }
 
-      .slide-grid {
-        grid-template-columns: 1fr;
+      .mobile-script-button {
+        display: inline-flex;
       }
 
-      .media-placeholder {
-        min-height: 240px;
-      }
-
-      .time-row {
+      .time-row,
+      .check-grid {
         grid-template-columns: 1fr;
       }
     }
 
     @media print {
-      body {
-        background: white;
-        color: black;
-        font-size: 12pt;
-      }
-
+      body { background: white; color: black; font-size: 12pt; }
       header,
       nav,
       .hero-actions,
       .studio-panel,
       .sticky-status,
       .no-print,
-      footer {
+      footer,
+      .walkthrough,
+      .timeline,
+      #criteria {
         display: none !important;
       }
-
       .page-shell,
       .layout,
-      main {
-        width: 100%;
-        display: block;
-        margin: 0;
-        padding: 0;
-      }
-
-      section.card {
-        box-shadow: none;
-        border: none;
-        padding: 0;
-      }
-
-      section.card:not(#create-submit) {
-        display: none;
-      }
-
-      #create-submit > *:not(.path-panel),
-      #create-submit .path-panel:not(.active),
-      #create-submit .timeline,
-      #create-submit .studio-panel,
-      #create-submit .format-grid,
-      #create-submit .tool-grid,
-      #create-submit .alert {
-        display: none !important;
-      }
-
-      .print-only {
-        display: block;
-      }
+      main { width: 100%; display: block; margin: 0; padding: 0; }
+      section.card { box-shadow: none; border: none; padding: 0; }
+      section.card:not(#plan) { display: none; }
+      .print-only { display: block; }
     }
   </style>
 </head>
@@ -820,13 +588,13 @@
 
   <header class="hero">
     <div class="page-shell">
-      <div class="hero-card social-hero">
-        <span class="eyebrow">ENGL&amp; 101 Creator Studio</span>
+      <div class="hero-card">
+        <span class="eyebrow">ENGL&amp; 101 Video Studio</span>
         <h1>Who Are You?</h1>
-        <p class="hero-text">Use this studio to plan and create your two-minute class introduction. You have two choices: record a video introduction, or create slides with a voiceover. Your final presentation should help classmates get to know you and explain how ENGL&amp; 101 might benefit you in school, your career path, or your personal life.</p>
+        <p class="hero-text">Use this studio to plan, script, record, and download your two-minute video introduction. Your final video should help classmates get to know you and explain how ENGL&amp; 101 might benefit you in school, your career path, or your personal life.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#formats">Choose format</a>
-          <a class="button secondary" href="#create-submit">Create presentation</a>
+          <a class="button primary" href="#plan">Start with your script</a>
+          <a class="button secondary" href="#record">Go to recording booth</a>
           <button class="clay" type="button" onclick="window.print()">Print script only</button>
         </div>
       </div>
@@ -835,97 +603,73 @@
 
   <div class="page-shell layout">
     <nav class="side-nav no-print" aria-label="Page sections">
-      <h2>Creator Menu</h2>
-      <a href="#formats">1. Choose video or slides</a>
-      <a href="#create-submit">2. Plan, create, and submit</a>
-      <a href="#criteria">3. Final checklist</a>
+      <h2>Studio Menu</h2>
+      <a href="#plan">1. Plan your video</a>
+      <a href="#record">2. Record with script</a>
+      <a href="#upload">3. Post to Canvas</a>
+      <a href="#criteria">4. Final checklist</a>
     </nav>
 
     <main id="main">
-      <section class="card" id="formats">
+      <section class="card" id="plan">
         <div class="section-kicker">Step 1</div>
-        <h2>Choose your introduction style</h2>
-        <p>Choose one path before you move on. The page will only show the creation instructions for the option you select.</p>
+        <h2>Plan your two-minute video</h2>
+        <p>Your video must be at least 1 minute and no longer than 2 minutes. Use the timing map and script builder below to draft what you want to say.</p>
 
-        <div class="format-grid social-options">
-          <article class="format-card option-card">
-            <div>
-              <div class="option-topline">Option 1</div>
-              <h3>Video introduction</h3>
-              <p>Record yourself speaking to the camera using your phone, computer, Zoom, Canvas media recorder, or the video recorder on this page.</p>
-            </div>
-            <button type="button" class="secondary choice-button" data-path="video" aria-pressed="false">Select video</button>
-          </article>
-          <article class="format-card option-card featured-option">
-            <div>
-              <div class="option-topline">Option 2</div>
-              <h3>Slides with voiceover</h3>
-              <p>Create 3 to 5 slides and record your voice as you talk through them. A plain slideshow without your voice does not meet the assignment requirement.</p>
-            </div>
-            <button type="button" class="secondary choice-button" data-path="slides" aria-pressed="false">Select slides</button>
-          </article>
+        <div class="timeline" aria-label="Suggested two-minute timing map for video">
+          <div class="time-row"><strong>0:00 to 0:20</strong><span>Introduce your name and preferred pronouns.</span></div>
+          <div class="time-row"><strong>0:20 to 0:50</strong><span>Share a little background, such as your hometown, program of study, interests, or goals.</span></div>
+          <div class="time-row"><strong>0:50 to 1:25</strong><span>Share something meaningful or representative about you. This can be a story, object, hobby, photo, symbol, or creative work.</span></div>
+          <div class="time-row"><strong>1:25 to 1:50</strong><span>Explain how ENGL&amp; 101 might benefit you in your academic journey, career path, or personal life.</span></div>
+          <div class="time-row"><strong>1:50 to 2:00</strong><span>End with a closing thought, thank you, or final detail you want classmates to remember.</span></div>
         </div>
 
-        <div class="choice-feedback" id="choiceFeedback" aria-live="polite">Choose an option to reveal the matching creation instructions below.</div>
+        <div class="script-builder" id="script">
+          <h3>Build your video script</h3>
+          <p class="field-help">Your answers save in this browser automatically, but you should still copy anything important.</p>
+
+          <label for="student-name">Name and preferred pronouns</label>
+          <p class="field-help">Example: My name is Jordan, and my pronouns are she/her.</p>
+          <input id="student-name" type="text" data-save="intro-name" />
+
+          <label for="background">A little about your background</label>
+          <p class="field-help">You might include your hometown, program of study, interests, or goals.</p>
+          <textarea id="background" data-save="intro-background"></textarea>
+
+          <label for="meaningful">Something meaningful or representative about you</label>
+          <p class="field-help">This could be a story, object, photo, hobby, symbol, or creative work.</p>
+          <textarea id="meaningful" data-save="intro-meaningful"></textarea>
+
+          <label for="course-connection">How ENGL&amp; 101 might benefit you</label>
+          <p class="field-help">Think about your academic journey, career path, or personal life.</p>
+          <textarea id="course-connection" data-save="intro-course"></textarea>
+
+          <label for="closing">Closing thought</label>
+          <p class="field-help">End with one detail you want classmates to remember.</p>
+          <textarea id="closing" data-save="intro-closing"></textarea>
+
+          <div class="hero-actions no-print">
+            <button type="button" class="primary" id="generateScript">Generate script draft</button>
+            <button type="button" class="secondary" id="copyScript">Copy script</button>
+            <button type="button" class="secondary" id="clearDraft">Clear saved draft</button>
+          </div>
+
+          <div class="print-only">
+            <h2>Who Are You? Script Draft</h2>
+          </div>
+          <div class="output-box" id="scriptOutput" aria-live="polite">Your generated script will appear here. It will also appear beside the recorder after you generate it.</div>
+        </div>
       </section>
 
-      <section class="card" id="create-submit">
+      <section class="card" id="record">
         <div class="section-kicker">Step 2</div>
-        <h2>Plan, create, and submit</h2>
-        <p>Your selected path will appear here. Each path includes a timing plan, script builder, creation steps, and Canvas submission directions.</p>
+        <h2>Record with your script beside you</h2>
+        <p>When you generate your script, it appears next to the recorder so you can read from it while you record. Nothing is uploaded from this page.</p>
 
-        <div class="alert" id="pathReminder">
-          <strong>Choose an option first:</strong> Select video or slides at the top of the page so this section only shows the instructions you need.
-        </div>
-
-        <div class="path-panel" id="videoPath">
-          <div class="timeline" aria-label="Suggested two-minute timing map for video">
-            <div class="time-row"><strong>0:00 to 0:20</strong><span>Introduce your name and preferred pronouns.</span></div>
-            <div class="time-row"><strong>0:20 to 0:50</strong><span>Share a little background, such as your hometown, program of study, interests, or goals.</span></div>
-            <div class="time-row"><strong>0:50 to 1:25</strong><span>Share something meaningful or representative about you. This can be a story, object, hobby, photo, symbol, or creative work.</span></div>
-            <div class="time-row"><strong>1:25 to 1:50</strong><span>Explain how ENGL&amp; 101 might benefit you in your academic journey, career path, or personal life.</span></div>
-            <div class="time-row"><strong>1:50 to 2:00</strong><span>End with a closing thought, thank you, or final detail you want classmates to remember.</span></div>
-          </div>
-
-          <div class="script-builder" id="script">
-            <h3>Build your video script</h3>
-            <p class="field-help">Use these fields to draft what you will say. Your answers save in this browser automatically, but you should still copy anything important.</p>
-
-            <label for="student-name">Name and preferred pronouns</label>
-            <p class="field-help">Example: My name is Jordan, and my pronouns are she/her.</p>
-            <input id="student-name" type="text" data-save="intro-name" />
-
-            <label for="background">A little about your background</label>
-            <p class="field-help">You might include your hometown, program of study, interests, or goals.</p>
-            <textarea id="background" data-save="intro-background"></textarea>
-
-            <label for="meaningful">Something meaningful or representative about you</label>
-            <p class="field-help">This could be a story, object, photo, hobby, symbol, or creative work.</p>
-            <textarea id="meaningful" data-save="intro-meaningful"></textarea>
-
-            <label for="course-connection">How ENGL&amp; 101 might benefit you</label>
-            <p class="field-help">Think about your academic journey, career path, or personal life.</p>
-            <textarea id="course-connection" data-save="intro-course"></textarea>
-
-            <label for="closing">Closing thought</label>
-            <p class="field-help">End with one detail you want classmates to remember.</p>
-            <textarea id="closing" data-save="intro-closing"></textarea>
-
-            <div class="hero-actions no-print">
-              <button type="button" class="primary" id="generateScript">Generate script draft</button>
-              <button type="button" class="secondary" id="copyScript">Copy script</button>
-              <button type="button" class="secondary" id="clearDraft">Clear saved draft</button>
-            </div>
-
-            <div class="print-only">
-              <h2>Who Are You? Script Draft</h2>
-            </div>
-            <div class="output-box" id="scriptOutput" aria-live="polite">Your generated script will appear here.</div>
-          </div>
-
+        <div class="recording-layout">
           <div class="studio-panel">
-            <h3>Video introduction path</h3>
-            <p>Record yourself speaking to the camera. You can use this recorder, your phone, Zoom, or the Canvas media recorder. Keep the video steady, speak clearly, and make sure it is between 1 and 2 minutes.</p>
+            <h3>Recording booth</h3>
+            <p>You should see yourself while recording. After you stop, preview the recording and download the file.</p>
             <div class="recorder-controls">
               <button type="button" class="clay" id="startRecording">Start recording</button>
               <button type="button" class="secondary" id="stopRecording" disabled>Stop recording</button>
@@ -933,163 +677,73 @@
             <p id="recordingStatus">Video recorder is ready.</p>
             <video id="livePreview" autoplay muted playsinline style="display:none" aria-label="Live camera preview"></video>
             <video id="videoPreview" controls playsinline style="display:none" aria-label="Recorded video preview"></video>
+            <button type="button" class="secondary mobile-script-button" id="openScriptDrawer">Show script while recording</button>
             <a id="downloadRecording" class="button secondary download-link" download="who-are-you-introduction-video.mp4">Download my video</a>
           </div>
 
-          <div class="timeline">
-            <div class="time-row"><strong>1</strong><span>Record your 1 to 2 minute video.</span></div>
-            <div class="time-row"><strong>2</strong><span>Preview it and make sure your audio is clear.</span></div>
-            <div class="time-row"><strong>3</strong><span>Use the Canvas Upload Walkthrough below to post your video.</span></div>
-          </div>
-
-          <div class="walkthrough" aria-label="Canvas upload walkthrough for video">
-            <h3>Canvas Upload Walkthrough</h3>
-            <p class="field-help">Choose how you are posting your video. The walkthrough will show only those steps.</p>
-            <div class="walkthrough-tabs">
-              <button type="button" class="secondary walkthrough-tab" data-walkthrough="videoFile" aria-pressed="true">Video file</button>
-              <button type="button" class="secondary walkthrough-tab" data-walkthrough="driveLink" aria-pressed="false">Google Drive link</button>
-            </div>
-            <div class="walkthrough-screen">
-              <div class="screen-topbar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span><span>Canvas discussion reply</span></div>
-              <div class="screen-body">
-                <div class="walkthrough-panel active" data-panel="videoFile">
-                  <ol>
-                    <li>Open the Canvas discussion and click Reply.</li>
-                    <li>Write a short greeting or context sentence.</li>
-                    <li>Use the attachment, file upload, or media upload option to add your video file.</li>
-                    <li>Wait for the upload to finish before posting.</li>
-                    <li>Post your reply, then play the video to make sure classmates can hear and see it.</li>
-                  </ol>
-                  <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a working video upload.</div>
-                </div>
-                <div class="walkthrough-panel" data-panel="driveLink">
-                  <ol>
-                    <li>Upload your video to Google Drive.</li>
-                    <li>Open sharing settings and choose Anyone with the link.</li>
-                    <li>Make sure the permission says Viewer.</li>
-                    <li>Copy the link and paste it into your Canvas discussion reply.</li>
-                    <li>Open the link from Canvas to make sure it works.</li>
-                  </ol>
-                  <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a Drive link classmates can view.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="path-panel" id="slidesPath">
-          <div class="timeline" aria-label="Suggested two-minute timing map for slides with voiceover">
-            <div class="time-row"><strong>0:00 to 0:20</strong><span>Slide 1: introduce your name and preferred pronouns.</span></div>
-            <div class="time-row"><strong>0:20 to 0:50</strong><span>Slide 2: share a little background, such as your hometown, program of study, interests, or goals.</span></div>
-            <div class="time-row"><strong>0:50 to 1:25</strong><span>Slide 3: share something meaningful or representative about you. This can be a story, object, hobby, photo, symbol, or creative work.</span></div>
-            <div class="time-row"><strong>1:25 to 1:50</strong><span>Slide 4: explain how ENGL&amp; 101 might benefit you in your academic journey, career path, or personal life.</span></div>
-            <div class="time-row"><strong>1:50 to 2:00</strong><span>Slide 5: end with a closing thought, thank you, or final detail you want classmates to remember.</span></div>
-          </div>
-
-          <div class="script-builder" id="script">
-            <h3>Build your voiceover script</h3>
-            <p class="field-help">Use these fields to draft what you will say over your slides. Your answers save in this browser automatically, but you should still copy anything important.</p>
-
-            <label for="student-name">Name and preferred pronouns</label>
-            <p class="field-help">Example: My name is Jordan, and my pronouns are she/her.</p>
-            <input id="student-name" type="text" data-save="intro-name" />
-
-            <label for="background">A little about your background</label>
-            <p class="field-help">You might include your hometown, program of study, interests, or goals.</p>
-            <textarea id="background" data-save="intro-background"></textarea>
-
-            <label for="meaningful">Something meaningful or representative about you</label>
-            <p class="field-help">This could be a story, object, photo, hobby, symbol, or creative work.</p>
-            <textarea id="meaningful" data-save="intro-meaningful"></textarea>
-
-            <label for="course-connection">How ENGL&amp; 101 might benefit you</label>
-            <p class="field-help">Think about your academic journey, career path, or personal life.</p>
-            <textarea id="course-connection" data-save="intro-course"></textarea>
-
-            <label for="closing">Closing thought</label>
-            <p class="field-help">End with one detail you want classmates to remember.</p>
-            <textarea id="closing" data-save="intro-closing"></textarea>
-
+          <aside class="recorder-script" aria-label="Script to read while recording">
+            <h3>Your script</h3>
+            <p class="field-help">Generate your script first. Then use this as a side-by-side guide while recording.</p>
+            <div class="script-scroll" id="recordingScript">Your generated script will appear here.</div>
             <div class="hero-actions no-print">
-              <button type="button" class="primary" id="generateScript">Generate script draft</button>
-              <button type="button" class="secondary" id="copyScript">Copy script</button>
-              <button type="button" class="secondary" id="clearDraft">Clear saved draft</button>
+              <a class="button secondary" href="#script">Edit script</a>
+              <button type="button" class="secondary" id="copyScriptSide">Copy script</button>
             </div>
-
-            <div class="print-only">
-              <h2>Who Are You? Script Draft</h2>
-            </div>
-            <div class="output-box" id="scriptOutput" aria-live="polite">Your generated script will appear here.</div>
-          </div>
-
-          <div class="format-grid">
-            <div class="mini-card">
-              <h3>Slides with voiceover path</h3>
-              <p>Make 3 to 5 slides, record your voice, then export or upload the finished presentation. You can use Google Slides, PowerPoint, Zoom, or another tool that lets you record your voice with the slides.</p>
-              <div class="hero-actions no-print">
-                <a class="button clay" href="https://docs.google.com/presentation/create" target="_blank" rel="noopener noreferrer">Open Google Slides</a>
-              </div>
-            </div>
-            <div class="mini-card">
-              <h3>Remember</h3>
-              <p>Your voice must be included. A plain slideshow without voiceover does not count as the final presentation.</p>
-            </div>
-          </div>
-
-          <div class="timeline">
-            <div class="time-row"><strong>1</strong><span>Create 3 to 5 slides using the timing plan above.</span></div>
-            <div class="time-row"><strong>2</strong><span>Record your voice over the slides.</span></div>
-            <div class="time-row"><strong>3</strong><span>Export the finished presentation as a video, or save it in a format Canvas can play.</span></div>
-            <div class="time-row"><strong>4</strong><span>Use the Canvas Upload Walkthrough below to post your slides with voiceover.</span></div>
-          </div>
-
-          <div class="walkthrough" aria-label="Canvas upload walkthrough for slides with voiceover">
-            <h3>Canvas Upload Walkthrough</h3>
-            <p class="field-help">Choose how you are posting your slides with voiceover. The walkthrough will show only those steps.</p>
-            <div class="walkthrough-tabs">
-              <button type="button" class="secondary walkthrough-tab" data-walkthrough="slidesFile" aria-pressed="true">Exported video file</button>
-              <button type="button" class="secondary walkthrough-tab" data-walkthrough="driveLink" aria-pressed="false">Google Drive link</button>
-            </div>
-            <div class="walkthrough-screen">
-              <div class="screen-topbar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span><span>Canvas discussion reply</span></div>
-              <div class="screen-body">
-                <div class="walkthrough-panel active" data-panel="slidesFile">
-                  <ol>
-                    <li>Open the Canvas discussion and click Reply.</li>
-                    <li>Write a short greeting or context sentence.</li>
-                    <li>Upload the exported slideshow video or voiceover presentation file.</li>
-                    <li>Wait for the upload to finish before posting.</li>
-                    <li>Post your reply, then play the file to make sure the voiceover can be heard.</li>
-                  </ol>
-                  <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a working file with voiceover.</div>
-                </div>
-                <div class="walkthrough-panel" data-panel="driveLink">
-                  <ol>
-                    <li>Upload your exported slideshow video or voiceover file to Google Drive.</li>
-                    <li>Open sharing settings and choose Anyone with the link.</li>
-                    <li>Make sure the permission says Viewer.</li>
-                    <li>Copy the link and paste it into your Canvas discussion reply.</li>
-                    <li>Open the link from Canvas to make sure the voiceover plays.</li>
-                  </ol>
-                  <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a Drive link classmates can view and hear.</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </aside>
         </div>
 
         <div class="alert">
-          <strong>Google Drive link note:</strong> If you share through Google Drive, make sure the file is viewable by anyone with the link, and make sure the permission is Viewer, not Editor or Commenter.
+          <strong>Backup option:</strong> If the browser recorder does not work on your device, you may record with your phone, Zoom, or Canvas media recorder. Then upload the finished video to the Canvas discussion board.
+        </div>
+      </section>
+
+      <section class="card" id="upload">
+        <div class="section-kicker">Step 3</div>
+        <h2>Post your video to Canvas</h2>
+        <p>Use this walkthrough after you download or save your video. The studio page helps you create the work, but the final post still goes in the Canvas discussion board.</p>
+
+        <div class="walkthrough" aria-label="Canvas upload walkthrough for video">
+          <h3>Canvas Upload Walkthrough</h3>
+          <p class="field-help">Choose how you are posting your video. The walkthrough will show only those steps.</p>
+          <div class="walkthrough-tabs">
+            <button type="button" class="secondary walkthrough-tab" data-walkthrough="videoFile" aria-pressed="true">Video file</button>
+            <button type="button" class="secondary walkthrough-tab" data-walkthrough="driveLink" aria-pressed="false">Google Drive link</button>
+          </div>
+          <div class="walkthrough-screen">
+            <div class="screen-topbar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span><span>Canvas discussion reply</span></div>
+            <div class="screen-body">
+              <div class="walkthrough-panel active" data-panel="videoFile">
+                <ol>
+                  <li>Open the Canvas discussion and click Reply.</li>
+                  <li>Write a short greeting or context sentence.</li>
+                  <li>Use the attachment, file upload, or media upload option to add your video file.</li>
+                  <li>Wait for the upload to finish before posting.</li>
+                  <li>Post your reply, then play the video to make sure classmates can hear and see it.</li>
+                </ol>
+                <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a working video upload.</div>
+              </div>
+              <div class="walkthrough-panel" data-panel="driveLink">
+                <ol>
+                  <li>Upload your video to Google Drive.</li>
+                  <li>Open sharing settings and choose Anyone with the link.</li>
+                  <li>Make sure the permission says Viewer.</li>
+                  <li>Copy the link and paste it into your Canvas discussion reply.</li>
+                  <li>Open the link from Canvas to make sure it works.</li>
+                </ol>
+                <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a Drive link classmates can view.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="card" id="criteria">
-        <div class="section-kicker">Step 3</div>
+        <div class="section-kicker">Step 4</div>
         <h2>Final checklist</h2>
         <p>This assignment is graded Complete or Incomplete. Check each requirement before you finish.</p>
 
         <div class="check-grid compact-checklist">
-          <div class="check-item"><input type="checkbox" id="c1" data-save="check-1"><label for="c1">My video or slides-with-voiceover presentation is between 1 and 2 minutes.</label></div>
+          <div class="check-item"><input type="checkbox" id="c1" data-save="check-1"><label for="c1">My video is between 1 and 2 minutes.</label></div>
           <div class="check-item"><input type="checkbox" id="c2" data-save="check-2"><label for="c2">I include my name and preferred pronouns.</label></div>
           <div class="check-item"><input type="checkbox" id="c3" data-save="check-3"><label for="c3">I include background, interests, goals, or program of study.</label></div>
           <div class="check-item"><input type="checkbox" id="c4" data-save="check-4"><label for="c4">I share something meaningful or representative about me.</label></div>
@@ -1100,71 +754,32 @@
     </main>
   </div>
 
+  <div class="drawer-backdrop no-print" id="drawerBackdrop"></div>
+  <div class="script-drawer no-print" id="scriptDrawer" aria-label="Mobile script drawer" aria-hidden="true">
+    <div class="script-drawer-header">
+      <h3>Your script</h3>
+      <button type="button" class="secondary" id="closeScriptDrawer">Close</button>
+    </div>
+    <p class="field-help">Use this as a guide while recording. You can close and reopen it as needed.</p>
+    <div class="script-scroll" id="drawerScript">Your generated script will appear here.</div>
+  </div>
+
   <div class="sticky-status no-print" id="saveStatus">Autosave ready</div>
 
   <footer>
-    <div class="page-shell">This studio helps you prepare your presentation. Your final submission still goes in Canvas.</div>
+    <div class="page-shell">This studio helps you prepare your video. Your final submission still goes in Canvas.</div>
   </footer>
 
   <script>
     const saveStatus = document.getElementById('saveStatus');
     const saveFields = document.querySelectorAll('[data-save]');
-    const choiceButtons = document.querySelectorAll('.choice-button');
-    const videoPath = document.getElementById('videoPath');
-    const slidesPath = document.getElementById('slidesPath');
-    const pathReminder = document.getElementById('pathReminder');
-    const choiceFeedback = document.getElementById('choiceFeedback');
-
-    function showPath(path) {
-      const isVideo = path === 'video';
-      const isSlides = path === 'slides';
-
-      videoPath.classList.toggle('active', isVideo);
-      slidesPath.classList.toggle('active', isSlides);
-      pathReminder.style.display = isVideo || isSlides ? 'none' : 'block';
-      choiceFeedback.classList.add('active');
-      choiceFeedback.textContent = isVideo
-        ? 'Video selected. The video creation steps are now visible below.'
-        : 'Slides with voiceover selected. The slide creation steps are now visible below.';
-
-      choiceButtons.forEach((button) => {
-        const pressed = button.dataset.path === path;
-        button.setAttribute('aria-pressed', pressed ? 'true' : 'false');
-        button.textContent = pressed
-          ? (path === 'video' ? 'Video selected' : 'Slides selected')
-          : (button.dataset.path === 'video' ? 'Select video' : 'Select slides');
-      });
-
-      localStorage.setItem('whoAreYouStudio:selectedPath', path);
-      document.getElementById('create-submit').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    choiceButtons.forEach((button) => {
-      button.addEventListener('click', () => showPath(button.dataset.path));
-    });
-
-    function activateWalkthrough(button) {
-      const walkthrough = button.closest('.walkthrough');
-      if (!walkthrough) return;
-      const target = button.dataset.walkthrough;
-
-      walkthrough.querySelectorAll('.walkthrough-tab').forEach((tab) => {
-        tab.setAttribute('aria-pressed', tab === button ? 'true' : 'false');
-      });
-
-      walkthrough.querySelectorAll('.walkthrough-panel').forEach((panel) => {
-        panel.classList.toggle('active', panel.dataset.panel === target);
-      });
-    }
-
-    document.querySelectorAll('.walkthrough-tab').forEach((button) => {
-      button.addEventListener('click', () => activateWalkthrough(button));
-    });
-
-    const savedPath = localStorage.getItem('whoAreYouStudio:selectedPath');
-    if (savedPath === 'video' || savedPath === 'slides') {
-      showPath(savedPath);
-    }
+    const scriptOutput = document.getElementById('scriptOutput');
+    const recordingScript = document.getElementById('recordingScript');
+    const drawerScript = document.getElementById('drawerScript');
+    const scriptDrawer = document.getElementById('scriptDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const openScriptDrawer = document.getElementById('openScriptDrawer');
+    const closeScriptDrawer = document.getElementById('closeScriptDrawer');
 
     function setStatus(text) {
       saveStatus.textContent = text;
@@ -1172,6 +787,14 @@
       window.statusTimer = setTimeout(() => {
         saveStatus.textContent = 'Autosave ready';
       }, 1600);
+    }
+
+    function updateRecordingScript(text) {
+      const scriptText = text && text.trim() ? text : 'Your generated script will appear here.';
+      scriptOutput.textContent = scriptText;
+      recordingScript.textContent = scriptText;
+      drawerScript.textContent = scriptText;
+      localStorage.setItem('whoAreYouStudio:generatedScript', scriptText);
     }
 
     saveFields.forEach((field) => {
@@ -1195,7 +818,6 @@
     });
 
     const getValue = (id) => document.getElementById(id).value.trim();
-    const scriptOutput = document.getElementById('scriptOutput');
 
     function generateScript() {
       const name = getValue('student-name') || '[name and preferred pronouns]';
@@ -1213,8 +835,7 @@ Something meaningful or representative about me is ${meaningful}
 I think ENGL& 101 might benefit me because ${course}
 
 To close, ${closing}`;
-      scriptOutput.textContent = script;
-      localStorage.setItem('whoAreYouStudio:generatedScript', script);
+      updateRecordingScript(script);
       setStatus('Script generated');
     }
 
@@ -1222,17 +843,20 @@ To close, ${closing}`;
 
     const savedScript = localStorage.getItem('whoAreYouStudio:generatedScript');
     if (savedScript) {
-      scriptOutput.textContent = savedScript;
+      updateRecordingScript(savedScript);
     }
 
-    document.getElementById('copyScript').addEventListener('click', async () => {
+    async function copyText(text) {
       try {
-        await navigator.clipboard.writeText(scriptOutput.textContent);
+        await navigator.clipboard.writeText(text);
         setStatus('Script copied');
       } catch (error) {
         setStatus('Copy failed. Select and copy manually.');
       }
-    });
+    }
+
+    document.getElementById('copyScript').addEventListener('click', () => copyText(scriptOutput.textContent));
+    document.getElementById('copyScriptSide').addEventListener('click', () => copyText(recordingScript.textContent));
 
     document.getElementById('clearDraft').addEventListener('click', () => {
       const confirmClear = confirm('Clear your saved draft and checklist on this device?');
@@ -1244,9 +868,37 @@ To close, ${closing}`;
         if (field.type === 'checkbox') field.checked = false;
         else field.value = '';
       });
-      scriptOutput.textContent = 'Your generated script will appear here.';
+      updateRecordingScript('Your generated script will appear here. It will also appear beside the recorder after you generate it.');
       setStatus('Draft cleared');
     });
+
+    function activateWalkthrough(button) {
+      const walkthrough = button.closest('.walkthrough');
+      if (!walkthrough) return;
+      const target = button.dataset.walkthrough;
+
+      walkthrough.querySelectorAll('.walkthrough-tab').forEach((tab) => {
+        tab.setAttribute('aria-pressed', tab === button ? 'true' : 'false');
+      });
+
+      walkthrough.querySelectorAll('.walkthrough-panel').forEach((panel) => {
+        panel.classList.toggle('active', panel.dataset.panel === target);
+      });
+    }
+
+    document.querySelectorAll('.walkthrough-tab').forEach((button) => {
+      button.addEventListener('click', () => activateWalkthrough(button));
+    });
+
+    function setDrawer(open) {
+      scriptDrawer.classList.toggle('active', open);
+      drawerBackdrop.classList.toggle('active', open);
+      scriptDrawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    }
+
+    openScriptDrawer.addEventListener('click', () => setDrawer(true));
+    closeScriptDrawer.addEventListener('click', () => setDrawer(false));
+    drawerBackdrop.addEventListener('click', () => setDrawer(false));
 
     let mediaRecorder;
     let mediaStream;
@@ -1333,9 +985,9 @@ To close, ${closing}`;
         mediaRecorder.start();
         startButton.disabled = true;
         stopButton.disabled = false;
-        status.textContent = 'Recording now. You should see yourself in the live preview. Click Stop recording when finished.';
+        status.textContent = 'Recording now. You should see yourself in the live preview. On a phone, tap Show script while recording if you want the script open.';
       } catch (error) {
-        status.textContent = 'Recording could not start or this browser cannot play the recording format. Try your phone, Zoom, PowerPoint, Canvas, or check browser permissions.';
+        status.textContent = 'Recording could not start or this browser cannot play the recording format. Try your phone, Zoom, Canvas media recorder, or check browser permissions.';
       }
     }
 
