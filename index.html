@@ -335,6 +335,53 @@
       margin: 1rem 0;
     }
 
+    .recording-timer {
+      display: grid;
+      gap: 0.45rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .timer-readout {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .timer-message {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 800;
+    }
+
+    .timer-bar {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+    }
+
+    .timer-fill {
+      width: 0%;
+      height: 100%;
+      background: #c59a4a;
+      transition: width 0.25s ease, background 0.25s ease;
+    }
+
+    .recording-timer.ready .timer-fill { background: #c59a4a; }
+    .recording-timer.good .timer-fill { background: #7d927c; }
+    .recording-timer.warning .timer-fill { background: #d08a42; }
+    .recording-timer.stop .timer-fill { background: #c95050; }
+    .recording-timer.ready .timer-readout { color: #fffaf1; }
+    .recording-timer.good .timer-readout { color: #d8f0d5; }
+    .recording-timer.warning .timer-readout { color: #ffe4bd; }
+    .recording-timer.stop .timer-readout { color: #ffd2d2; }
+
     video {
       width: 100%;
       margin-top: 0.75rem;
@@ -441,7 +488,8 @@
       margin-top: 1rem;
     }
 
-    .walkthrough-tab[aria-pressed="true"] {
+    .walkthrough-tab[aria-pressed="true"],
+    .mode-button[aria-pressed="true"] {
       background: var(--plum);
       color: white;
       border-color: transparent;
@@ -594,7 +642,7 @@
         <p class="hero-text">Use this studio to plan, script, record, and download your two-minute video introduction. Your final video should help classmates get to know you and explain how ENGL&amp; 101 might benefit you in school, your career path, or your personal life.</p>
         <div class="hero-actions">
           <a class="button primary" href="#plan">Start with your script</a>
-          <a class="button secondary" href="#record">Go to recording booth</a>
+          <a class="button secondary" href="#record">Recording options</a>
           <button class="clay" type="button" onclick="window.print()">Print script only</button>
         </div>
       </div>
@@ -605,7 +653,7 @@
     <nav class="side-nav no-print" aria-label="Page sections">
       <h2>Studio Menu</h2>
       <a href="#plan">1. Plan your video</a>
-      <a href="#record">2. Record with script</a>
+      <a href="#record">2. Record your video</a>
       <a href="#upload">3. Post to Canvas</a>
       <a href="#criteria">4. Final checklist</a>
     </nav>
@@ -663,27 +711,44 @@
 
       <section class="card" id="record">
         <div class="section-kicker">Step 2</div>
-        <h2>Record with your script beside you</h2>
-        <p>When you generate your script, it appears next to the recorder so you can read from it while you record. Nothing is uploaded from this page.</p>
+        <h2>Record your video with your script nearby</h2>
+        <p>Choose the device or browser you are using, then start recording.</p>
 
         <div class="recording-layout">
           <div class="studio-panel">
             <h3>Recording booth</h3>
-            <p>You should see yourself while recording. After you stop, preview the recording and download the file.</p>
+            <p id="modeHelp">Select your recording mode.</p>
+
+            <div class="recorder-controls" aria-label="Recording mode choices">
+              <button type="button" class="secondary mode-button" data-mode="safari" aria-pressed="false">Safari / Mac</button>
+              <button type="button" class="secondary mode-button" data-mode="chrome" aria-pressed="true">Chrome / Edge</button>
+              <button type="button" class="secondary mode-button" data-mode="phone" aria-pressed="false">Phone / Tablet</button>
+            </div>
+
+            <div class="recording-timer ready" id="recordingTimer" aria-live="polite">
+              <div class="timer-readout" id="timerReadout">0:00</div>
+              <p class="timer-message" id="timerMessage">Aim for 1:45 to 2:15.</p>
+              <div class="timer-bar" aria-hidden="true"><div class="timer-fill" id="timerFill"></div></div>
+            </div>
+
             <div class="recorder-controls">
               <button type="button" class="clay" id="startRecording">Start recording</button>
               <button type="button" class="secondary" id="stopRecording" disabled>Stop recording</button>
             </div>
+
             <p id="recordingStatus">Video recorder is ready.</p>
             <video id="livePreview" autoplay muted playsinline style="display:none" aria-label="Live camera preview"></video>
             <video id="videoPreview" controls playsinline style="display:none" aria-label="Recorded video preview"></video>
-            <button type="button" class="secondary mobile-script-button" id="openScriptDrawer">Show script while recording</button>
-            <a id="downloadRecording" class="button secondary download-link" download="who-are-you-introduction-video.mp4">Download my video</a>
+            <a id="downloadRecording" class="button secondary download-link" download="who-are-you-introduction-video.webm">Download my video</a>
+            <div id="phoneCaptureBox" style="display:none; margin-top: 0.75rem;">
+              <label for="phoneCapture" class="button secondary" style="display:inline-flex; margin:0; color:#1f2933;">Open phone camera</label>
+              <input id="phoneCapture" type="file" accept="video/*" capture="user" style="position:absolute; left:-9999px;" />
+            </div>
           </div>
 
           <aside class="recorder-script" aria-label="Script to read while recording">
             <h3>Your script</h3>
-            <p class="field-help">Generate your script first. Then use this as a side-by-side guide while recording.</p>
+            <p class="field-help">Generate your script first. Then keep this open as a side-by-side guide while recording.</p>
             <div class="script-scroll" id="recordingScript">Your generated script will appear here.</div>
             <div class="hero-actions no-print">
               <a class="button secondary" href="#script">Edit script</a>
@@ -692,9 +757,7 @@
           </aside>
         </div>
 
-        <div class="alert">
-          <strong>Backup option:</strong> If the browser recorder does not work on your device, you may record with your phone, Zoom, or Canvas media recorder. Then upload the finished video to the Canvas discussion board.
-        </div>
+        <button type="button" class="secondary mobile-script-button" id="openScriptDrawer">Show script while recording</button>
       </section>
 
       <section class="card" id="upload">
@@ -704,10 +767,9 @@
 
         <div class="walkthrough" aria-label="Canvas upload walkthrough for video">
           <h3>Canvas Upload Walkthrough</h3>
-          <p class="field-help">Choose how you are posting your video. The walkthrough will show only those steps.</p>
+          <p class="field-help">Post your video using the Canvas media/video option so classmates can watch it directly inside the discussion thread.</p>
           <div class="walkthrough-tabs">
-            <button type="button" class="secondary walkthrough-tab" data-walkthrough="videoFile" aria-pressed="true">Video file</button>
-            <button type="button" class="secondary walkthrough-tab" data-walkthrough="driveLink" aria-pressed="false">Google Drive link</button>
+            <button type="button" class="secondary walkthrough-tab" data-walkthrough="videoFile" aria-pressed="true">Playable Canvas video</button>
           </div>
           <div class="walkthrough-screen">
             <div class="screen-topbar"><span class="screen-dot"></span><span class="screen-dot"></span><span class="screen-dot"></span><span>Canvas discussion reply</span></div>
@@ -716,21 +778,13 @@
                 <ol>
                   <li>Open the Canvas discussion and click Reply.</li>
                   <li>Write a short greeting or context sentence.</li>
-                  <li>Use the attachment, file upload, or media upload option to add your video file.</li>
-                  <li>Wait for the upload to finish before posting.</li>
-                  <li>Post your reply, then play the video to make sure classmates can hear and see it.</li>
+                  <li>In the reply box toolbar, choose the media/video option, not the plain file attachment option.</li>
+                  <li>Upload or record your video through the media tool so it appears as a playable video inside your reply.</li>
+                  <li>Wait for the video to finish processing before posting.</li>
+                  <li>Post your reply, then play the video inside the discussion thread to make sure classmates can hear and see it.</li>
                 </ol>
-                <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a working video upload.</div>
+                <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a video player that can be watched directly in the discussion thread, not just a downloadable file attachment.</div>
               </div>
-              <div class="walkthrough-panel" data-panel="driveLink">
-                <ol>
-                  <li>Upload your video to Google Drive.</li>
-                  <li>Open sharing settings and choose Anyone with the link.</li>
-                  <li>Make sure the permission says Viewer.</li>
-                  <li>Copy the link and paste it into your Canvas discussion reply.</li>
-                  <li>Open the link from Canvas to make sure it works.</li>
-                </ol>
-                <div class="canvas-mini-post"><strong>Post check:</strong> Your reply should include a greeting plus a Drive link classmates can view.</div>
               </div>
             </div>
           </div>
@@ -748,7 +802,7 @@
           <div class="check-item"><input type="checkbox" id="c3" data-save="check-3"><label for="c3">I include background, interests, goals, or program of study.</label></div>
           <div class="check-item"><input type="checkbox" id="c4" data-save="check-4"><label for="c4">I share something meaningful or representative about me.</label></div>
           <div class="check-item"><input type="checkbox" id="c5" data-save="check-5"><label for="c5">I explain how ENGL&amp; 101 might benefit me.</label></div>
-          <div class="check-item"><input type="checkbox" id="c6" data-save="check-6"><label for="c6">I posted it to Canvas, checked that it works, and replied to three classmates.</label></div>
+          <div class="check-item"><input type="checkbox" id="c6" data-save="check-6"><label for="c6">I posted it to Canvas as a playable video in the discussion thread, checked that it works, and replied to three classmates.</label></div>
         </div>
       </section>
     </main>
@@ -872,23 +926,7 @@ To close, ${closing}`;
       setStatus('Draft cleared');
     });
 
-    function activateWalkthrough(button) {
-      const walkthrough = button.closest('.walkthrough');
-      if (!walkthrough) return;
-      const target = button.dataset.walkthrough;
 
-      walkthrough.querySelectorAll('.walkthrough-tab').forEach((tab) => {
-        tab.setAttribute('aria-pressed', tab === button ? 'true' : 'false');
-      });
-
-      walkthrough.querySelectorAll('.walkthrough-panel').forEach((panel) => {
-        panel.classList.toggle('active', panel.dataset.panel === target);
-      });
-    }
-
-    document.querySelectorAll('.walkthrough-tab').forEach((button) => {
-      button.addEventListener('click', () => activateWalkthrough(button));
-    });
 
     function setDrawer(open) {
       scriptDrawer.classList.toggle('active', open);
@@ -896,7 +934,9 @@ To close, ${closing}`;
       scriptDrawer.setAttribute('aria-hidden', open ? 'false' : 'true');
     }
 
-    openScriptDrawer.addEventListener('click', () => setDrawer(true));
+    if (openScriptDrawer) {
+      openScriptDrawer.addEventListener('click', () => setDrawer(true));
+    }
     closeScriptDrawer.addEventListener('click', () => setDrawer(false));
     drawerBackdrop.addEventListener('click', () => setDrawer(false));
 
@@ -904,16 +944,51 @@ To close, ${closing}`;
     let mediaStream;
     let recordedChunks = [];
     let recordingMimeType = '';
+    let recordingMode = 'chrome';
+    let timerInterval;
+    let recordingStartTime = 0;
 
-    function getSupportedVideoType() {
-      const possibleTypes = [
+    const MIN_ACCEPTABLE_SECONDS = 105;
+    const WARNING_SECONDS = 120;
+    const STOP_SECONDS = 135;
+
+    const modeButtons = document.querySelectorAll('.mode-button');
+    const modeHelp = document.getElementById('modeHelp');
+const phoneCaptureBox = document.getElementById('phoneCaptureBox');
+    const phoneCapture = document.getElementById('phoneCapture');
+    const startButton = document.getElementById('startRecording');
+    const stopButton = document.getElementById('stopRecording');
+    const status = document.getElementById('recordingStatus');
+    const livePreview = document.getElementById('livePreview');
+    const videoPreview = document.getElementById('videoPreview');
+    const downloadLink = document.getElementById('downloadRecording');
+    const recordingTimer = document.getElementById('recordingTimer');
+    const timerReadout = document.getElementById('timerReadout');
+    const timerMessage = document.getElementById('timerMessage');
+    const timerFill = document.getElementById('timerFill');
+
+    function getSupportedTypeForMode(mode) {
+      const safariTypes = [
+        'video/mp4;codecs=h264,aac',
+        'video/mp4'
+      ];
+
+      const chromeTypes = [
+        'video/webm;codecs=vp9,opus',
+        'video/webm;codecs=vp8,opus',
+        'video/webm',
+        'video/mp4;codecs=h264,aac',
+        'video/mp4'
+      ];
+
+      const phoneTypes = [
         'video/mp4;codecs=h264,aac',
         'video/mp4',
-        'video/webm;codecs=vp9,opus',
         'video/webm;codecs=vp8,opus',
         'video/webm'
       ];
 
+      const possibleTypes = mode === 'safari' ? safariTypes : mode === 'phone' ? phoneTypes : chromeTypes;
       if (!window.MediaRecorder) return '';
       return possibleTypes.find((type) => MediaRecorder.isTypeSupported(type)) || '';
     }
@@ -922,31 +997,100 @@ To close, ${closing}`;
       return type.includes('mp4') ? 'mp4' : 'webm';
     }
 
-    const startButton = document.getElementById('startRecording');
-    const stopButton = document.getElementById('stopRecording');
-    const status = document.getElementById('recordingStatus');
-    const livePreview = document.getElementById('livePreview');
-    const videoPreview = document.getElementById('videoPreview');
-    const downloadLink = document.getElementById('downloadRecording');
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function setTimerState(state, message) {
+      recordingTimer.classList.remove('ready', 'good', 'warning', 'stop');
+      recordingTimer.classList.add(state);
+      timerMessage.textContent = message;
+    }
+
+    function updateTimerDisplay(totalSeconds) {
+      timerReadout.textContent = formatTime(totalSeconds);
+      const percent = Math.min((totalSeconds / STOP_SECONDS) * 100, 100);
+      timerFill.style.width = `${percent}%`;
+
+      if (totalSeconds >= STOP_SECONDS) {
+        setTimerState('stop', 'Stop now. You are past 2:15.');
+      } else if (totalSeconds >= WARNING_SECONDS) {
+        setTimerState('warning', 'Start wrapping up. You are past 2:00.');
+      } else if (totalSeconds >= MIN_ACCEPTABLE_SECONDS) {
+        setTimerState('good', 'Good length. You can stop when ready.');
+      } else {
+        setTimerState('ready', 'Keep going. Aim for at least 1:45.');
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      recordingStartTime = 0;
+      timerReadout.textContent = '0:00';
+      timerFill.style.width = '0%';
+      setTimerState('ready', 'Aim for 1:45 to 2:15.');
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      recordingStartTime = Date.now();
+      updateTimerDisplay(0);
+      timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+        updateTimerDisplay(elapsed);
+      }, 250);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      const elapsed = recordingStartTime ? Math.floor((Date.now() - recordingStartTime) / 1000) : 0;
+      updateTimerDisplay(elapsed);
+      recordingStartTime = 0;
+    }
+
+    function setRecordingMode(mode) {
+      recordingMode = mode;
+      modeButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', button.dataset.mode === mode ? 'true' : 'false');
+      });
+
+      phoneCaptureBox.style.display = mode === 'phone' ? 'block' : 'none';
+
+      if (mode === 'safari') {
+        modeHelp.textContent = 'Safari / Mac selected.';
+      } else if (mode === 'phone') {
+        modeHelp.textContent = 'Phone / Tablet selected.';
+      } else {
+        modeHelp.textContent = 'Chrome / Edge selected.';
+      }
+
+      setStatus(mode === 'safari' ? 'Safari mode selected' : mode === 'phone' ? 'Phone mode selected' : 'Chrome mode selected');
+    }
+
+    modeButtons.forEach((button) => {
+      button.addEventListener('click', () => setRecordingMode(button.dataset.mode));
+    });
 
     async function startRecording() {
       recordedChunks = [];
+      resetTimer();
       downloadLink.style.display = 'none';
       videoPreview.style.display = 'none';
       livePreview.style.display = 'none';
 
       try {
-        const constraints = { audio: true, video: { facingMode: 'user' } };
-
         if (!window.MediaRecorder) {
           throw new Error('MediaRecorder is not supported in this browser.');
         }
 
-        recordingMimeType = getSupportedVideoType();
+        recordingMimeType = getSupportedTypeForMode(recordingMode);
         if (!recordingMimeType) {
           throw new Error('No supported recording format found.');
         }
 
+        const constraints = { audio: true, video: { facingMode: 'user' } };
         mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
         livePreview.srcObject = mediaStream;
         livePreview.muted = true;
@@ -954,7 +1098,6 @@ To close, ${closing}`;
         livePreview.style.display = 'block';
         videoPreview.removeAttribute('src');
         videoPreview.load();
-        videoPreview.style.display = 'none';
         mediaRecorder = new MediaRecorder(mediaStream, { mimeType: recordingMimeType });
 
         mediaRecorder.addEventListener('dataavailable', (event) => {
@@ -975,7 +1118,8 @@ To close, ${closing}`;
           downloadLink.download = `who-are-you-introduction-video.${extension}`;
           downloadLink.href = url;
           downloadLink.style.display = 'inline-flex';
-          status.textContent = `Recording finished as .${extension}. Preview it, then download the file.`;
+          stopTimer();
+          status.textContent = `Recording finished as .${extension}. Preview it. If the audio is off, switch modes or use the phone/Zoom/Canvas backup.`;
 
           if (mediaStream) {
             mediaStream.getTracks().forEach((track) => track.stop());
@@ -983,17 +1127,21 @@ To close, ${closing}`;
         });
 
         mediaRecorder.start();
+        startTimer();
         startButton.disabled = true;
         stopButton.disabled = false;
         status.textContent = 'Recording now. You should see yourself in the live preview. On a phone, tap Show script while recording if you want the script open.';
       } catch (error) {
-        status.textContent = 'Recording could not start or this browser cannot play the recording format. Try your phone, Zoom, Canvas media recorder, or check browser permissions.';
+        resetTimer();
+        status.textContent = 'Recording could not start in this mode. Try a different mode, check camera/mic permissions, or use phone, Zoom, or Canvas recorder.';
       }
     }
 
     function stopRecording() {
       if (mediaRecorder && mediaRecorder.state !== 'inactive') {
         mediaRecorder.stop();
+      } else {
+        stopTimer();
       }
       startButton.disabled = false;
       stopButton.disabled = true;
@@ -1001,6 +1149,25 @@ To close, ${closing}`;
 
     startButton.addEventListener('click', startRecording);
     stopButton.addEventListener('click', stopRecording);
+
+    if (phoneCapture) {
+      phoneCapture.addEventListener('change', () => {
+        const file = phoneCapture.files && phoneCapture.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        videoPreview.src = url;
+        videoPreview.load();
+        videoPreview.style.display = 'block';
+        downloadLink.href = url;
+        downloadLink.download = file.name || 'who-are-you-introduction-video.mp4';
+        downloadLink.style.display = 'inline-flex';
+        resetTimer();
+        status.textContent = 'Phone camera video selected. Preview it here, then upload it to Canvas.';
+      });
+    }
+
+    resetTimer();
+    setRecordingMode('chrome');
   </script>
 </body>
 </html>
