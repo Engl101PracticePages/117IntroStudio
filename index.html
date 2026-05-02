@@ -931,7 +931,8 @@
               <button type="button" class="secondary" id="stopRecording" disabled>Stop recording</button>
             </div>
             <p id="recordingStatus">Video recorder is ready.</p>
-            <video id="videoPreview" controls playsinline style="display:none"></video>
+            <video id="livePreview" autoplay muted playsinline style="display:none" aria-label="Live camera preview"></video>
+            <video id="videoPreview" controls playsinline style="display:none" aria-label="Recorded video preview"></video>
             <a id="downloadRecording" class="button secondary download-link" download="who-are-you-introduction-video.webm">Download my video</a>
           </div>
 
@@ -1254,6 +1255,7 @@ To close, ${closing}`;
     const startButton = document.getElementById('startRecording');
     const stopButton = document.getElementById('stopRecording');
     const status = document.getElementById('recordingStatus');
+    const livePreview = document.getElementById('livePreview');
     const videoPreview = document.getElementById('videoPreview');
     const downloadLink = document.getElementById('downloadRecording');
 
@@ -1261,11 +1263,15 @@ To close, ${closing}`;
       recordedChunks = [];
       downloadLink.style.display = 'none';
       videoPreview.style.display = 'none';
+      livePreview.style.display = 'none';
 
       try {
         const constraints = { audio: true, video: { facingMode: 'user' } };
 
         mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+        livePreview.srcObject = mediaStream;
+        livePreview.style.display = 'block';
+        videoPreview.style.display = 'none';
         mediaRecorder = new MediaRecorder(mediaStream);
 
         mediaRecorder.addEventListener('dataavailable', (event) => {
@@ -1276,6 +1282,9 @@ To close, ${closing}`;
           const blob = new Blob(recordedChunks, { type: 'video/webm' });
           const url = URL.createObjectURL(blob);
 
+          livePreview.pause();
+          livePreview.srcObject = null;
+          livePreview.style.display = 'none';
           videoPreview.src = url;
           videoPreview.style.display = 'block';
           downloadLink.download = 'who-are-you-introduction-video.webm';
@@ -1291,7 +1300,7 @@ To close, ${closing}`;
         mediaRecorder.start();
         startButton.disabled = true;
         stopButton.disabled = false;
-        status.textContent = 'Recording now. Click Stop recording when finished.';
+        status.textContent = 'Recording now. You should see yourself in the live preview. Click Stop recording when finished.';
       } catch (error) {
         status.textContent = 'Recording could not start. Try your phone, Zoom, PowerPoint, Canvas, or check browser permissions.';
       }
