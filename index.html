@@ -933,7 +933,7 @@
             <p id="recordingStatus">Video recorder is ready.</p>
             <video id="livePreview" autoplay muted playsinline style="display:none" aria-label="Live camera preview"></video>
             <video id="videoPreview" controls playsinline style="display:none" aria-label="Recorded video preview"></video>
-            <a id="downloadRecording" class="button secondary download-link" download="who-are-you-introduction-video.webm">Download my video</a>
+            <a id="downloadRecording" class="button secondary download-link" download="who-are-you-introduction-video.mp4">Download my video</a>
           </div>
 
           <div class="timeline">
@@ -1251,6 +1251,24 @@ To close, ${closing}`;
     let mediaRecorder;
     let mediaStream;
     let recordedChunks = [];
+    let recordingMimeType = '';
+
+    function getSupportedVideoType() {
+      const possibleTypes = [
+        'video/mp4;codecs=h264,aac',
+        'video/mp4',
+        'video/webm;codecs=vp9,opus',
+        'video/webm;codecs=vp8,opus',
+        'video/webm'
+      ];
+
+      if (!window.MediaRecorder) return '';
+      return possibleTypes.find((type) => MediaRecorder.isTypeSupported(type)) || '';
+    }
+
+    function extensionForMimeType(type) {
+      return type.includes('mp4') ? 'mp4' : 'webm';
+    }
 
     const startButton = document.getElementById('startRecording');
     const stopButton = document.getElementById('stopRecording');
@@ -1268,29 +1286,44 @@ To close, ${closing}`;
       try {
         const constraints = { audio: true, video: { facingMode: 'user' } };
 
+        if (!window.MediaRecorder) {
+          throw new Error('MediaRecorder is not supported in this browser.');
+        }
+
+        recordingMimeType = getSupportedVideoType();
+        if (!recordingMimeType) {
+          throw new Error('No supported recording format found.');
+        }
+
         mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
         livePreview.srcObject = mediaStream;
+        livePreview.muted = true;
+        livePreview.play().catch(() => {});
         livePreview.style.display = 'block';
+        videoPreview.removeAttribute('src');
+        videoPreview.load();
         videoPreview.style.display = 'none';
-        mediaRecorder = new MediaRecorder(mediaStream);
+        mediaRecorder = new MediaRecorder(mediaStream, { mimeType: recordingMimeType });
 
         mediaRecorder.addEventListener('dataavailable', (event) => {
           if (event.data.size > 0) recordedChunks.push(event.data);
         });
 
         mediaRecorder.addEventListener('stop', () => {
-          const blob = new Blob(recordedChunks, { type: 'video/webm' });
+          const blob = new Blob(recordedChunks, { type: recordingMimeType });
           const url = URL.createObjectURL(blob);
+          const extension = extensionForMimeType(recordingMimeType);
 
           livePreview.pause();
           livePreview.srcObject = null;
           livePreview.style.display = 'none';
           videoPreview.src = url;
+          videoPreview.load();
           videoPreview.style.display = 'block';
-          downloadLink.download = 'who-are-you-introduction-video.webm';
+          downloadLink.download = `who-are-you-introduction-video.${extension}`;
           downloadLink.href = url;
           downloadLink.style.display = 'inline-flex';
-          status.textContent = 'Recording finished. Preview it, then download the file.';
+          status.textContent = `Recording finished as .${extension}. Preview it, then download the file.`;
 
           if (mediaStream) {
             mediaStream.getTracks().forEach((track) => track.stop());
@@ -1302,7 +1335,7 @@ To close, ${closing}`;
         stopButton.disabled = false;
         status.textContent = 'Recording now. You should see yourself in the live preview. Click Stop recording when finished.';
       } catch (error) {
-        status.textContent = 'Recording could not start. Try your phone, Zoom, PowerPoint, Canvas, or check browser permissions.';
+        status.textContent = 'Recording could not start or this browser cannot play the recording format. Try your phone, Zoom, PowerPoint, Canvas, or check browser permissions.';
       }
     }
 
